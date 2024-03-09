@@ -21,9 +21,11 @@ app.use(session({
 
 const flashcardRoutes = require('./scripts/flashcardsApi');
 const loginRoutes = require('./scripts/login');
+const summaryRoutes = require('./scripts/summaryPDF');
 
 app.use('/flashcards', flashcardRoutes);
-app.use('/login',loginRoutes);
+app.use('/login', loginRoutes);
+app.use('/summary', summaryRoutes);
 
 app.listen(port);
 
