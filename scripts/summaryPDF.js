@@ -2,12 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const PDFParser = require('pdf-parse');
+const router = express.Router();
 
 require('dotenv').config(); 
 const OpenAI = require("openai");
-
-const app = express();
-app.use(bodyParser.json());
 
 const openai = new OpenAI({
   apiKey: process.env.apiKey
@@ -22,7 +20,7 @@ function extractTextFromPDF(pdfPath) {
 }
 
 // Endpoint to extract text based on ID and send it to ChatGPT
-app.get('/summary/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const pdfPath = `./data/pdfs/chapter${id}.pdf`;
 
@@ -48,7 +46,7 @@ app.get('/summary/:id', async (req, res) => {
 });
 
 // Endpoint to fetch and translate the summary
-app.get('/translate', async (req, res) => {
+router.get('/translate', async (req, res) => {
   const { language } = req.query;
 
   // Fetch the summary from the variable
@@ -69,8 +67,4 @@ app.get('/translate', async (req, res) => {
   res.send(translatedSummary);
 });
 
-// Start the server
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+module.exports = router;
