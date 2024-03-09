@@ -22,16 +22,16 @@ db.chapters.hasMany(db.flashcards, {foreignKey: 'chapterId'});
 db.flashcards.belongsTo(db.chapters, {foreignKey: 'chapterId', as: 'chapter'});
 
 // n na n veze
-db.students.hasMany(db.studentsflashcards);
+db.students.hasMany(db.studentsflashcards, { as: 'studentFlashcards' });
 db.studentsflashcards.belongsTo(db.students);
 
-db.flashcards.hasMany(db.studentsflashcards);
+db.flashcards.hasMany(db.studentsflashcards, { as: 'flashcardStudents'});
 db.studentsflashcards.belongsTo(db.students);
 
-db.students.hasMany(db.studentsprofessors);
+db.students.hasMany(db.studentsprofessors, { as: 'studentProfessors' });
 db.studentsprofessors.belongsTo(db.students);
 
-db.professors.hasMany(db.studentsprofessors);
+db.professors.hasMany(db.studentsprofessors, { as: 'professorStudents'});
 db.studentsprofessors.belongsTo(db.students);
 
 module.exports = db;
