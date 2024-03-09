@@ -37,11 +37,11 @@ router.get('/:id', async (req, res) => {
     const summary = completion.choices[0].message.content.trim();
 
     summaries[0] = summary;
-    res.send(summary);
+    res.status(200).json({summary: summary});
 
   } catch (error) {
     console.error('Error:', error);
-    res.status(500).send('Error processing the request.');
+    res.status(500).status.json({error:'Error processing the request.'});
   }
 });
 
@@ -53,7 +53,7 @@ router.get('/translate', async (req, res) => {
   const summary = summaries[0];
 
   if (!summary) {
-    return res.status(404).send('Summary not found');
+    return res.status(404).json({error: 'Summary not found'});
   }
 
   // Send the extracted text as a prompt to ChatGPT
@@ -64,7 +64,7 @@ router.get('/translate', async (req, res) => {
   });
   const translatedSummary = completion.choices[0].message.content.trim();
 
-  res.send(translatedSummary);
+  res.status(2000).json({translatedSummary: translatedSummary});
 });
 
 module.exports = router;
