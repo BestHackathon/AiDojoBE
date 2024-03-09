@@ -2,13 +2,17 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const PDFParser = require('pdf-parse');
-const apiKey = '';
+
+require('dotenv').config(); 
 const OpenAI = require("openai");
 
 const app = express();
 app.use(bodyParser.json());
 
-const openai = new OpenAI({ apiKey });
+const openai = new OpenAI({
+  apiKey: process.env.apiKey
+});
+
 
 function extractTextFromPDF(pdfPath) {
   const dataBuffer = fs.readFileSync(pdfPath);
