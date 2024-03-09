@@ -19,9 +19,11 @@ app.use(session({
     saveUninitialized: true
 }));
 
-const flashcardRoutes = require('./scripts/flashcardsApi')
+const flashcardRoutes = require('./scripts/flashcardsApi');
+const loginRoutes = require('./scripts/login');
 
 app.use('/flashcards', flashcardRoutes);
+app.use('/login',loginRoutes);
 
 app.listen(port);
 
