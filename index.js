@@ -22,10 +22,12 @@ app.use(session({
 const flashcardRoutes = require('./scripts/flashcardsApi');
 const loginRoutes = require('./scripts/login');
 const summaryRoutes = require('./scripts/summaryPDF');
+const recomendedRoutes = require('./scripts/recomended')
 
 app.use('/flashcards', flashcardRoutes);
 app.use('/login', loginRoutes);
 app.use('/summary', summaryRoutes);
+app.use('/recomended', recomendedRoutes);
 
 app.listen(port);
 
