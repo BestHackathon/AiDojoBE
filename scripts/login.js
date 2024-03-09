@@ -2,12 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const db = require('../config/db.js')
+const router = express.Router();
 
-const app = express();
-
-app.use(bodyParser.json());
-
-app.post('/login', (req, res) => {
+router.post('/', (req, res) => {
     const { email, password, isProfessor } = req.body;
     var table = db.students;
     if (isProfessor) table = db.professors;
@@ -28,3 +25,5 @@ app.post('/login', (req, res) => {
         }
     });
 });
+
+module.exports = router;
