@@ -15,13 +15,23 @@ db.professors = require(path.join(__dirname,'../models/professor.js'))(sequelize
 db.chapters = require(path.join(__dirname,'../models/chapter.js'))(sequelize); 
 db.flashcards = require(path.join(__dirname,'../models/flashcard.js'))(sequelize); 
 db.studentsflashcards =  require(path.join(__dirname,'../models/studentsflashcards.js'))(sequelize);
+db.studentsprofessors =  require(path.join(__dirname,'../models/studentsprofessors.js'))(sequelize);
 
 //1 na n veze
 db.chapters.hasMany(db.flashcards, {foreignKey: 'chapterId'});
 db.flashcards.belongsTo(db.chapters, {foreignKey: 'chapterId', as: 'chapter'});
 
 // n na n veze
-db.students.belongsToMany(db.flashcards, { through: db.studentsflashcards});
-db.flashcards.belongsToMany(db.students, { through: db.studentsflashcards});
+db.students.hasMany(db.studentsflashcards);
+db.studentsflashcards.belongsTo(db.students);
+
+db.flashcards.hasMany(db.studentsflashcards);
+db.studentsflashcards.belongsTo(db.students);
+
+db.students.hasMany(db.studentsprofessors);
+db.studentsprofessors.belongsTo(db.students);
+
+db.professors.hasMany(db.studentsprofessors);
+db.studentsprofessors.belongsTo(db.students);
 
 module.exports = db;
