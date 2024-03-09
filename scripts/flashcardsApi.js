@@ -10,15 +10,16 @@ const openai = new OpenAI({
     apiKey: process.env.apiKey
 });
 
-router.get('/:student_id', (req, res) => {
+router.get('/:student_id/:chapter_id', (req, res) => {
     const studentId = +req.params.student_id;
+    const chapterId = +req.params.chapter_id;
 
     db.students.findByPk(studentId, { include: 'studentFlashcards' }).then((student) => {
         if (student) {
             const studentFlashcards = student.studentFlashcards.map(async (studentFlashcard) => {
                 if (!studentFlashcard.studentKnewAnswer) {
                     const flashcard = await db.flashcards.findByPk(studentFlashcard.FlashCardId);
-                    if (flashcard) {
+                    if (flashcard && flashcard.chapterId == chapterId) {
                         return {
                             id: flashcard.id,
                             question: flashcard.question,
@@ -70,15 +71,17 @@ router.put('/:id', (req, res) => {
 });
 
 
-router.put('/reset/:student_id', (req, res) => {
+router.put('/reset/:student_id/:chapter_id', (req, res) => {
     const studentId = +req.params.student_id;
+    const chapterId = +req.params.chapter_id;
 
     db.students.findByPk(studentId, { include: 'studentFlashcards' })
         .then((student) => {
             if (student) {
                 const promises = [];
-                student.studentFlashcards.forEach((studentFlashcard) => {
-                    if (studentFlashcard.studentKnewAnswer) studentFlashcard.studentKnewAnswer = false;
+                student.studentFlashcards.forEach(async (studentFlashcard) => {
+                    const flashcard = await db.flashcards.findByPk(studentFlashcard.FlashCardId);
+                    if (flashcard.chapterId == chapterId && studentFlashcard.studentKnewAnswer) studentFlashcard.studentKnewAnswer = false;
                     promises.push(studentFlashcard.save());
                 });
 
