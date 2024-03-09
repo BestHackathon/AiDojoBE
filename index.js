@@ -19,5 +19,9 @@ app.use(session({
     saveUninitialized: true
 }));
 
+const flashcardRoutes = require('./scripts/flashcardsApi')
+
+app.use('/flashcards', flashcardRoutes);
+
 app.listen(port);
 
