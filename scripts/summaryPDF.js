@@ -29,7 +29,11 @@ router.get('/:id', async (req, res) => {
     const extractedText = await extractTextFromPDF(pdfPath);
 
     // Send the extracted text as a prompt to ChatGPT
-    const prompt = `Zadatak je da pojednostaviš tekst dat u nastavku.\n\nPojednostavi dokument kako bi bio razumljiv osobama s ograničenim znanjem o temi. Vrati mi odgovor u html formatu sa podnaslovima <h3> i odvojenim paragrafima sa barem pet rečenica. To uradi za svaki paragraf.\n\nOvo je tekst: ${extractedText}`;
+    const prompt = `Zadatak je da pojednostaviš tekst dat u nastavku.
+    \n\nPojednostavi dokument kako bi bio razumljiv osobama s ograničenim znanjem o temi.
+     Vrati mi odgovor u html formatu sa podnaslovima <h3> i odvojenim paragrafima sa barem pet rečenica. 
+     To uradi za svaki paragraf.
+     \n\nOvo je tekst: ${extractedText}`;
     const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [{ role: 'system', content: prompt }]
