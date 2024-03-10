@@ -29,7 +29,11 @@ router.get('/:id', async (req, res) => {
     const extractedText = await extractTextFromPDF(pdfPath);
 
     // Send the extracted text as a prompt to ChatGPT
-    const prompt = `Zadatak je da pojednostaviš tekst dat u nastavku.\n\nPojednostavi dokument kako bi bio razumljiv osobama s ograničenim znanjem o temi.\n\nOvo je tekst: ${extractedText}`;
+    const prompt = `Zadatak je da pojednostaviš tekst dat u nastavku.
+    \n\nPojednostavi dokument kako bi bio razumljiv osobama s ograničenim znanjem o temi.
+     Vrati mi odgovor u html formatu sa podnaslovima <h3> i odvojenim paragrafima sa barem pet rečenica. 
+     To uradi za svaki paragraf.
+     \n\nOvo je tekst: ${extractedText}`;
     const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [{ role: 'system', content: prompt }]
@@ -37,11 +41,12 @@ router.get('/:id', async (req, res) => {
     const summary = completion.choices[0].message.content.trim();
 
     summaries[0] = summary;
-    res.status(200).json({summary: summary});
+    res.setHeader('Content-Type', 'text/html');
+    res.status(200).send(summary);
 
   } catch (error) {
     console.error('Error:', error);
-    res.status(500).status.json({error:'Error processing the request.'});
+    res.status(500).send('<html><body><h3>Error processing the request.</h3></body></html>');
   }
 });
 

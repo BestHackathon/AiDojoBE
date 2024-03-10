@@ -115,7 +115,9 @@ try {
     const extractedText = await extractTextFromPDF(pdfPath);
 
     // Send the extracted text as a prompt to ChatGPT
-    const prompt = `Task: Iz teksta koji slijedi sastavi bar 10 pitanja i odgovora na njih za flashcards, obuhvati sve bitne teme. Fokusiraj se na pojmove koji se najviše ponavljaju, na podjele i definicije. Napiši u formatu - "Pitanje: Odgovor:". Tekst: ${extractedText}`;
+    const prompt = `Task: Iz teksta koji slijedi sastavi bar 10 pitanja i odgovora na njih za flashcards, obuhvati sve bitne teme.
+    Fokusiraj se na pojmove koji se najviše ponavljaju, na podjele i definicije.
+    Napiši u formatu - "Pitanje: Odgovor:". Tekst: ${extractedText}`;
     const completion = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
     messages: [{ role: 'system', content: prompt }]
