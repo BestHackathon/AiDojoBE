@@ -23,7 +23,7 @@ router.get('/:chapter_id', async (req,res) => {
 
     const pdfText = await extractTextFromPDF(pdfPath);
 
-    const prompt = `Zadatak je da mi navedeš naslove i autore od tri literature koje su kontekstom bliske, sa sljedećim tekstom: ${pdfText}.\n Za svaku litareturu navedi ih json formatu. Litareture moraju biti napisane na istom jeziku kao tekst koji sam ti poslao. Primjer kako bi trebao izgledat json file je: [
+    const prompt = `Zadatak je da mi navedeš naslove i autore od tri literature koje su kontekstom bliske, sortirane po popularnosti, sa sljedećim tekstom: ${pdfText}.\n Litareture trebaju biti pisane na jeziku na kojem je moj tekst koji sam ti poslao u prethodnoj rečenici. Za svaku litareturu navedi ih json formatu. Primjer kako bi trebao izgledat json file je: [
         {
             "naziv_literature": "neki naziv litareture",
             "autor": " autori..."
