@@ -12,6 +12,10 @@ AiDojo is a platform designed to assist students in learning subjects more effic
 - **Interactive Quizzes**: Engage in interactive quizzes generated based on the user's learning materials to reinforce learning.
 - **Recommendation System**: Enabling the finding of reliable literature for deepening the knowledge acquired through automated learning techniques.
 
+## Video
+
+To see how AiDojo platform looks like, check this video: [AiDojo - Video presentation of the platform](https://www.youtube.com/watch?v=HHd_k_zkLx0)
+
 ## Installation
 
 To install AiDojo, follow these steps:
